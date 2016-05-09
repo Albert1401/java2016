@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 /**
  * Class designed to parallel calculations on lists.
+ *
  * @see info.kgeorgiy.java.advanced.concurrent.ListIP
  */
 public class IterativeParallelism implements ListIP {
@@ -61,7 +62,7 @@ public class IterativeParallelism implements ListIP {
     /**
      * Creates instance
      */
-    public IterativeParallelism(){
+    public IterativeParallelism() {
 
     }
 
@@ -112,7 +113,7 @@ public class IterativeParallelism implements ListIP {
      * @param list     list of elements to map
      * @param function function to map each element
      * @param <T>      type that describes elements of given list
-     * @param <U> type that describes elements of resulting list
+     * @param <U>      type that describes elements of resulting list
      * @return list containing results of map to each element
      * @throws InterruptedException if any of threads has interrupted
      * @see java.util.function.Function
@@ -128,10 +129,10 @@ public class IterativeParallelism implements ListIP {
      * Returns maximum of given list.
      * Searching occurs simultaneously in {@code i} threads
      *
-     * @param i        number of threads
-     * @param list     list of elements to find maximum
+     * @param i          number of threads
+     * @param list       list of elements to find maximum
      * @param comparator comparator that helps to compare elements
-     * @param <T>      type that describes elements of given list
+     * @param <T>        type that describes elements of given list
      * @return maximum element in the list
      * @throws InterruptedException if any of threads has interrupted
      * @see java.util.Comparator
@@ -147,10 +148,10 @@ public class IterativeParallelism implements ListIP {
      * Returns minimum of given list.
      * Searching occurs simultaneously in {@code i} threads
      *
-     * @param i        number of threads
-     * @param list     list of elements to find minimum
+     * @param i          number of threads
+     * @param list       list of elements to find minimum
      * @param comparator comparator that helps to compare elements
-     * @param <T>      type that describes elements of given list
+     * @param <T>        type that describes elements of given list
      * @return minimum element in the list
      * @throws InterruptedException if any of threads has interrupted
      * @see java.util.Comparator
@@ -165,10 +166,10 @@ public class IterativeParallelism implements ListIP {
      * Checks that all elements of list satisfies given predicate.
      * Checking occurs simultaneously in {@code i} threads
      *
-     * @param i        number of threads
-     * @param list     list of elements to check
+     * @param i         number of threads
+     * @param list      list of elements to check
      * @param predicate predicate to check to
-     * @param <T>      type that describes elements of given list
+     * @param <T>       type that describes elements of given list
      * @return {@code boolean} if all elements satisfying predicate; false otherwise
      * @throws InterruptedException if any of threads has interrupted
      * @see java.util.function.Predicate
@@ -183,10 +184,10 @@ public class IterativeParallelism implements ListIP {
      * Checks that any element of list satisfies given predicate.
      * Checking occurs simultaneously in {@code i} threads
      *
-     * @param i        number of threads
-     * @param list     list of elements to check
+     * @param i         number of threads
+     * @param list      list of elements to check
      * @param predicate predicate to check to
-     * @param <T>      type that describes elements of given list
+     * @param <T>       type that describes elements of given list
      * @return {@code boolean} if any element satisfying predicate; false otherwise
      * @throws InterruptedException if any of threads has interrupted
      * @see java.util.function.Predicate

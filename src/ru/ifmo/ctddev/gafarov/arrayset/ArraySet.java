@@ -40,7 +40,7 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
             if (index == 0 || index == -1) {
                 return null;
             }
-            return list.get(index < 0 ? -index - 2: index - 1);
+            return list.get(index < 0 ? -index - 2 : index - 1);
         }
     }
 
@@ -52,12 +52,12 @@ public class ArraySet<T> extends AbstractSet<T> implements NavigableSet<T> {
             if (index == -size() - 1) {
                 return null;
             }
-            return list.get(index < 0 ? -index - 1: index);
+            return list.get(index < 0 ? -index - 1 : index);
         } else {
             if (index == -1) {
                 return null;
             }
-            return list.get(index < 0 ? -index - 2: index);
+            return list.get(index < 0 ? -index - 2 : index);
         }
     }
 

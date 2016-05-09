@@ -26,9 +26,10 @@ import java.util.zip.ZipEntry;
  */
 public class Implementor implements JarImpler {
 
+
+
     /**
      * Creating implementation of given class compressed in JAR.
-     * <p/>
      * Creates implementation of class, then tries to compile it.
      * If compilator's exit code was 0 and classfile exist makes JAR file from it with default manifest
      *
@@ -36,7 +37,7 @@ public class Implementor implements JarImpler {
      * @param path   JAR file location
      * @throws ImplerException if inheriting impossible
      *                         javac was not found
-     *                         javac exit code != 0
+     *                         javac exit code != 0Pac
      *                         IOException occurred
      * @see #implement(Class, Path)
      */
@@ -61,7 +62,6 @@ public class Implementor implements JarImpler {
 
     /**
      * Compiles java file.
-     * <p/>
      * Resulted classfile lies in the same directory as source java file
      *
      * @param source java file location
@@ -138,7 +138,6 @@ public class Implementor implements JarImpler {
 
         /**
          * Returns list of methods that must be implemented.
-         * <p/>
          * Returns only abstract methods of superclasses
          *
          * @param aClass {@code Class} to get methods from
@@ -153,7 +152,6 @@ public class Implementor implements JarImpler {
 
         /**
          * Puts methods of superclass and interfaces into the map.
-         * <p/>
          * Recursive method to look through superclasses and interfaces of {@code Class aClass}.
          * Uses #getHashString(Method) to keep from adding already defined method.
          *
@@ -236,6 +234,7 @@ public class Implementor implements JarImpler {
 
         /**
          * Appends method or constructor arguments
+         *
          * @param args to implement
          */
         private void printArgs(Class[] args) {
@@ -248,8 +247,10 @@ public class Implementor implements JarImpler {
         }
 
         /**
+         * Creates a file that implements or extends interface or class.
+         * Output file is created in folder that corresponds of given class or interface
          *
-         * @param exceptions
+         * @param exceptions exceptions to append
          */
         public void printExceptions(Class[] exceptions) {
             if (exceptions.length != 0) {
@@ -264,6 +265,10 @@ public class Implementor implements JarImpler {
             write(SPACE);
         }
 
+        /**
+         * Appends string representations of args to builder
+         * @param strings vararg strings to append
+         */
         private void write(String... strings) {
             for (String string : strings) {
                 builder.append(string);
@@ -272,9 +277,13 @@ public class Implementor implements JarImpler {
     }
 
     /**
-     * @param aClass
-     * @param root
-     * @throws ImplerException
+     * Creates a file that implements or extends interface or class.
+     * Output file is created in folder that corresponds of given class or interface.
+     *
+     * @param aClass class or interface will be implemented
+     * @param root   directory where to create implementation
+     * @throws ImplerException ii inheriting impossible,
+     *                         IOException occurred
      */
     @Override
     public void implement(Class<?> aClass, Path root) throws ImplerException {
@@ -306,5 +315,25 @@ public class Implementor implements JarImpler {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Main method to execute
+     * @param args {Class canonical name, path to jar}
+     */
+    public static void main(String[] args) {
+        if (args.length != 2){
+            System.out.println("Usage: <class canonical name> <path to jar>");
+            return;
+        }
+        try {
+            Class aClass = Class.forName(args[0]);
+            Path jar = Paths.get(args[1]);
+            new Implementor().implementJar(aClass, jar);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error load class" + e.getMessage());
+        } catch (ImplerException e) {
+            System.out.println(e.getMessage());
+        } catch (InvalidPathException e){
+            System.out.println("Incorrect path" + e.getMessage());
+        }
+    }
 }

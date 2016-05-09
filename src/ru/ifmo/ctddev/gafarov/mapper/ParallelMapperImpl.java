@@ -10,12 +10,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- *
+ *  Class designed to manage parallel functions on lists.
+ * @see info.kgeorgiy.java.advanced.mapper.ParallelMapper
  */
 public class ParallelMapperImpl implements ParallelMapper {
     private final Queue<Task<?, ?>> tasksFIFO = new ArrayDeque<>();
     private final ArrayList<Thread> threads = new ArrayList<>();
 
+    /**
+     * Creates instance of class working on {@code n_threads}
+     * @param n_threads number of threads to work on
+     */
     public ParallelMapperImpl(int n_threads) {
         for (int i = 0; i < n_threads; i++) {
             threads.add(new Thread(() -> {
@@ -65,6 +70,15 @@ public class ParallelMapperImpl implements ParallelMapper {
 
     }
 
+    /**
+     * Creates Task for each element and pass it to worker threads
+     * @param function function to apply to each element
+     * @param list input data
+     * @param <T> type that describes input data
+     * @param <R> type that describes output data
+     * @return list of results of applying function to each element
+     * @throws InterruptedException if any thread worker has interrupted
+     */
     @Override
     public <T, R> List<R> map(Function<? super T, ? extends R> function, List<? extends T> list) throws InterruptedException {
         List<Task<T, R>> tasksForList = list.stream().map(el -> new Task<T, R>(function, el)).collect(Collectors.toList());
@@ -80,6 +94,10 @@ public class ParallelMapperImpl implements ParallelMapper {
         return answer;
     }
 
+    /**
+     * Stops all threads
+     * @throws InterruptedException if any thread worker has interrupted
+     */
     @Override
     public void close() throws InterruptedException {
         synchronized (tasksFIFO){
